@@ -1,4 +1,7 @@
 #!/bin/sh
+# hfetch - A fetch written in POSIX sh
+# by Andresqwq
+# License: GPL-3.0-or-later
 
 # PALETTE
 
