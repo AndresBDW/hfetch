@@ -1,0 +1,54 @@
+#!/bin/sh
+
+# PALETTE
+
+C1=$'\033[31m' # Red
+C2=$'\033[32m' # Green
+C3=$'\033[33m' # Yellow
+C4=$'\033[34m' # Blue
+C5=$'\033[35m' # Magenta
+C6=$'\033[36m' # Cyan
+C7=$'\033[37m' # White
+reset=$'\033[0m' # Reset
+
+# LOGO
+
+L1="${C4}    ___    ${reset}"
+L2="${C4}   (${C7}.. ${C4}|   ${reset}"
+L3="${C4}   (${C5}<> ${C4}|   ${reset}"
+L4="${C4}  / ${C7}__  ${C4}\\  ${reset}"
+L5="${C4} ( ${C7}/  \\ ${C4}/| ${reset}"
+L6="${C5}_${C4}/\\ ${C7}__)${C4}/${C5}_${C4}) ${reset}"
+L7="${C5}\\/${C4}-____${C5}\\/  ${reset}"
+
+# INFO"
+
+I1="${C6}${USER}${reset}@${C6}${HOSTNAME}${reset}"
+I2="${C6}OS:         ${reset}$(grep '^PRETTY_NAME=' /etc/os-release | cut -d'=' -f2 | tr -d "'\"")"
+I3="${C6}Kernel:     ${reset}$(uname -r)"
+I4="${C6}Uptime:     ${reset}$(uptime | awk -F, '{print $1}' | sed 's/.*up //')"
+I5="${C6}Shell:      ${reset}$(readlink /proc/$$/exe | xargs basename)"
+I6="${C6}Terminal:   ${reset}${TERM}"
+I7="${C6}Editor:     ${reset}${EDITOR}"
+
+# PRINT
+
+printf "%s  %s\n" "$L1" "$I1"
+printf "%s  %s\n" "$L2" "$I2"
+printf "%s  %s\n" "$L3" "$I3"
+printf "%s  %s\n" "$L4" "$I4"
+printf "%s  %s\n" "$L5" "$I5"
+printf "%s  %s\n" "$L6" "$I6"
+printf "%s  %s\n" "$L7" "$I7"
+printf "\n"
+
+padding="             "
+row1=""
+row2=""
+for i in 0 1 2 3 4 5 6 7; do
+    # Concatenación estándar POSIX
+    row1="${row1}$(printf '\033[4%sm   \033[m' "$i")"
+    row2="${row2}$(printf '\033[10%sm   \033[m' "$i")"
+done
+
+printf "%s%b\n%s%b\n" "$padding" "$row1" "$padding" "$row2"
